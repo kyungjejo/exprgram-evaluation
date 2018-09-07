@@ -57,7 +57,7 @@ export default class Expression extends Component {
       }
     
       render() {
-        const { title, start, end, videoId, interval, original, expr, watched, appropriateness, similarity, grammar, grammar_check, redirect, count } = this.state;
+        const { title, start, end, videoId, interval, expressions, original, expr, watched, appropriateness, similarity, grammar, grammar_check, redirect, count } = this.state;
         const opts = {
           playerVars: { // https://developers.google.com/youtube/player_parameters
             autoplay: 0,
@@ -73,7 +73,7 @@ export default class Expression extends Component {
           <div>
             <div className="resources">
               <div className="title">
-                <Header as="h1">{title} ({count}/expressions.length)</Header>
+                <Header as="h1">{title} ({count}/{Object.keys(expressions).length})</Header>
               </div>
               <div className="expression-set">
                 <div className="expression-target">
@@ -204,7 +204,7 @@ export default class Expression extends Component {
         })
         .then((response) => response.json())
         .then(res => console.log(res))
-        if (count<expressions.length)
+        if (count<Object.keys(expressions).lengthh)
           this.setState({
             similarity: 0,
             appropriateness: 0,
