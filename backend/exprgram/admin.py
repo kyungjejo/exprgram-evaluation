@@ -11,3 +11,6 @@ from .models import *
 # admin.site.register(locationLables)
 # admin.site.register(emotionLables)
 # admin.site.register(intentionLables)
+
+admin.site.register(expressionEvaluationCount)
+admin.site.register(expressionEvaluationResult)

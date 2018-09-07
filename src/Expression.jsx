@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import YouTube from 'react-youtube';
 import { Redirect } from 'react-router-dom';
 import { Header, List, Radio, Divider, Button, Popup, Checkbox } from 'semantic-ui-react';
+import { HOST_URL } from './common';
 
 export default class Expression extends Component {
     constructor(props) {
@@ -34,8 +35,11 @@ export default class Expression extends Component {
       }
 
       componentDidMount() {
-        this.setState({workerID: this.props.match.params.workerID});
-        fetch('exprgram/Expression/', {'Access-Control-Allow-Origin':'*'})
+        // console.log(HOST_URL);
+        const workerID = Math.random().toString(36).substring(7);
+        this.setState({workerID: workerID});
+        // this.setState({workerID: this.props.match.params.workerID});
+        fetch(HOST_URL+'Expression/', {'Access-Control-Allow-Origin':'*'})
           .then(res => res.json())
           .then(result => 
               this.setState(
@@ -51,13 +55,13 @@ export default class Expression extends Component {
                   expr: result[this.state.count][1],
                   target: result[this.state.count][0][2],
                   redirect: false,
-                }, () => console.log(this.state.target)
+                }
               )
             );
       }
     
       render() {
-        const { title, start, end, videoId, interval, expressions, original, expr, watched, appropriateness, similarity, grammar, grammar_check, redirect, count } = this.state;
+        const { title, start, end, videoId, interval, expressions, original, expr, watched, appropriateness, similarity, grammar, grammar_check, redirect, count, workerID } = this.state;
         const opts = {
           playerVars: { // https://developers.google.com/youtube/player_parameters
             autoplay: 0,
@@ -66,7 +70,7 @@ export default class Expression extends Component {
           }
         };
         if (redirect) {
-          return <Redirect push to={"/"} />;
+          return <Redirect push to={"/after/"+workerID} />;
         }
     
         return (
@@ -106,19 +110,19 @@ export default class Expression extends Component {
                     <div className="question-wrapper">
                       <div className="question">Is <Popup trigger={<span id='evaluate'>expression B</span>} content={expr}/> grammatically correct? (You may ignore punctuation errors)</div>
                       <List className="question-list" horizontal>
-                        <List.Item>
+                        {/* <List.Item>
                           <strong>No</strong>
+                        </List.Item> */}
+                        <List.Item>
+                          <Radio label='Yes' name='grammar' value='true' onChange={this._onChange} checked={this.state.grammar===1} />
                         </List.Item>
                         <List.Item>
-                          <Radio name='grammar' onChange={this._onChange} toggle />
+                          <Radio label='No' name='grammar' value='false' onChange={this._onChange} checked={this.state.grammar===0} />
                         </List.Item>
-                        <List.Item>
+                        {/* <List.Item>
                           <strong>Yes</strong>
-                        </List.Item>
+                        </List.Item> */}
                       </List>
-                      <div>
-                      <Checkbox name='grammar_check' onChange={this._onChange} label="Click here if you are done." />
-                      </div>
                     </div>
                     :
                     ''
@@ -146,7 +150,7 @@ export default class Expression extends Component {
                 <div className="tasks" id="tasks">
                   <div className="questions">
                     <div className="question-wrapper">
-                      <div className="question">In the given context of the video, how appropriate would it to say <Popup trigger={<span id='evaluate'>expression B</span>} content={expr}/> 
+                      <div className="question">In the given context of the video, how appropriate would it be to say <Popup trigger={<span id='evaluate'>expression B</span>} content={expr}/> 
                       instead of <Popup trigger={<span id='target'>expression A</span>} content={original}/>?</div>
                       <List className="question-list" horizontal>
                         <List.Item>
@@ -163,24 +167,25 @@ export default class Expression extends Component {
                       </List>
                     </div>
                   </div>
-                  {
-                    similarity >0 && appropriateness>0 && grammar_check
-                    ?
+                  
                     <List horizontal>
                       <List.Item>
                     <Button positive>
                       Rewatch
                     </Button>
                     </List.Item>
-                    <List.Item>
-                    <Button disabled={!(appropriateness>0 && grammar_check)} primary onClick={this.onClickHandler}>
-                      Submit
-                    </Button>
-                    </List.Item>
+                    {
+                      similarity >0 && appropriateness>0 && grammar_check
+                      ?
+                      <List.Item>
+                      <Button disabled={!(appropriateness>0 && grammar_check)} primary onClick={this.onClickHandler}>
+                        Submit
+                      </Button>
+                      </List.Item>
+                      :
+                      ''
+                    }
                     </List>
-                    :
-                    ''
-                  }
                   </div>
                   :
                   ''
@@ -192,9 +197,9 @@ export default class Expression extends Component {
       }
     
       onClickHandler() {
-        console.log('onclickhandler executed')
-        const {similarity, appropriateness, grammar, target, expr, expressions, count, workerID} = this.state;
-        fetch('exprgram/expressionSave/', {
+        // console.log('onclickhandler executed')
+        const {similarity, appropriateness, grammar, target, expr, expressions, count, workerID, interval} = this.state;
+        fetch(HOST_URL+'expressionSave/', {
           method: 'POST',
           headers: {
               'Accept': 'application/json',
@@ -203,32 +208,33 @@ export default class Expression extends Component {
           body: JSON.stringify({'workerID': workerID, 'similarity': similarity, 'appropriateness': appropriateness, 'grammar': grammar, 'target': target, 'expr': expr})
         })
         .then((response) => response.json())
-        .then(res => console.log(res))
-        if (count<Object.keys(expressions).lengthh)
+        // .then(res => console.log(res))
+        if (count<Object.keys(expressions).length)
           this.setState({
             similarity: 0,
             appropriateness: 0,
             grammar: false,
             grammar_check: false,
-            watched: expressions[count+1][0][2] === target ? true : false,
+            watched: expressions[count][0][2] === target ? true : false,
             count: count+1,
-            original: expressions[count+1][0][1]['sent'],
-            target: expressions[count+1][0][2],
-            expr: expressions[count+1][1],
-            start:expressions[count+1][0][1]['start'],
-            end:expressions[count+1][0][1]['end']+5,
-            videoId: expressions[count+1][0][0],
-            expressionStart: expressions[count+1][0][1]['sentStart'],
-            expressionEnd: expressions[count+1][0][1]['sentEnd'],
-            expr: expressions[count+1][1],
+            original: expressions[count][0][1]['sent'],
+            target: expressions[count][0][2],
+            expr: expressions[count][1],
+            start:expressions[count][0][1]['start'],
+            end:expressions[count][0][1]['end']+5,
+            videoId: expressions[count][0][0],
+            expressionStart: expressions[count][0][1]['sentStart'],
+            expressionEnd: expressions[count][0][1]['sentEnd'],
+            expr: expressions[count][1],
           })
         else {
-          this.setState({redirect:true})
+          clearInterval(interval);
+          this.setState({redirect:true, interval: false})
         }
       }
 
       _onChange(event, checked) {
-        console.log(checked);
+        // console.log(checked);
         const name = checked.name;
         if (name === 'appropriateGroup') {
           this.setState({appropriateness: checked.value});
@@ -237,10 +243,8 @@ export default class Expression extends Component {
           this.setState({similarity: checked.value});
         }
         else if (name === 'grammar') {
-          this.setState({grammar: checked.checked ? 1 : 0})
-        }
-        else if (name === 'grammar_check') {
-          this.setState({grammar_check: checked.checked})
+          this.setState({grammar: checked.value==='true' ? 1 : 0})
+          this.setState({grammar_check: true})
         }
     
       }
@@ -253,7 +257,7 @@ export default class Expression extends Component {
           document.getElementById('target').classList.add('highlight');
           document.getElementsByClassName('App')[0].classList.add('highlight');
         }
-        else {
+        else if (document.getElementById('target')){
           document.getElementById('target').classList.remove('highlight');
           document.getElementsByClassName('App')[0].classList.remove('highlight');
         }
@@ -267,17 +271,17 @@ export default class Expression extends Component {
             }
           )
         }
-        console.log(parseInt(time,10));
+        // console.log(parseInt(time,10));
       }
     
       // Runs when the video starts playing
       _onPlay(event) {
-        const { interval, start, end } = this.state;
+        const { interval, start, end, redirect } = this.state;
         if ( event.target.getCurrentTime() < start-1 || event.target.getCurrentTime() > end+1) {
           event.target.seekTo(start);
         }
-        console.log(interval);
-        if (!interval){
+        // console.log(interval);
+        if (!interval && !redirect){
           this.setState(
             {
               interval: setInterval(() => this.timeCheck(event),1000)

@@ -15,7 +15,7 @@ from django.db.models import Q
 from .common import fetch_topic
 from random import shuffle
 from pattern.text.en import singularize
-from datetime import datetime
+from django.utils import timezone
 
 data = open(static('subtitle_aggregated.txt')).readlines()
 SUBTITLE_PATH = static('subtitle/')
@@ -125,9 +125,23 @@ def expression_save_to_database():
             line = f.readline()
 # expression_save_to_database()
 
+def HandleUndone():
+    exprs = expressionEvaluationCount.objects.filter(allocated__gte=3, count__lt=3).order_by('target')
+    for e in exprs:
+        _target = e.target
+        _expr = e.expression
+        time_delta = timezone.now()-e.last_allocated
+        hour_delta = time_delta.seconds//3600
+        if hour_delta>=1:
+            _count = 3 - e.count
+            e.allocated = 3-_count
+            e.save()
+        # expressionEvaluationCount.objects.filter(target=_target,expression=_expr).count()
+
 @csrf_exempt
 def Expression(request):
-    exprs = expressionEvaluationCount.objects.filter(allocated__lt=3).order_by('target')[:11]
+    HandleUndone()
+    exprs = expressionEvaluationCount.objects.filter(allocated__lt=3).order_by('target')[:10]
     data = {}
     for e in exprs:
         size = len(data)
@@ -135,11 +149,10 @@ def Expression(request):
         _expr = e.expression
         data[size] = (sentenceInfo(_target),_expr)
         _allocated = e.allocated+1
-        _allocated_time = datetime.now()
+        _allocated_time = timezone.now()
         e.allocated = _allocated
         e.last_allocated = _allocated_time
         e.save()
-    print(data)
     return HttpResponse(json.dumps(data), content_type="application/json")
 
 @csrf_exempt
@@ -152,7 +165,9 @@ def ExpressionSave(request):
     grammar=data['grammar']
     target=data['target']
     expression=data['expr']
-    print(values)
+    e = expressionEvaluationCount.objects.get(target=target,expression=expression)
+    e.count = e.count+1
+    e.save()
     result, created = expressionEvaluationResult.objects.get_or_create(target=target,expression=expression,meaningSimilarity=meaningSimilarity,
                                                         appropriateness=appropriateness,grammar=grammar,workerID=workerID)
     if not created:

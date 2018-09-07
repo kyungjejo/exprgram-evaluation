@@ -24,6 +24,7 @@ class expressionEvaluationResult(models.Model):
     grammar=models.IntegerField()
     appropriateness=models.IntegerField()
     workerID=models.TextField()
+    done=models.DateTimeField(default=datetime.now)
 
     def __str__(self):
         return("Worker: %s worked on Target: %d and Expression: %s" %(self.workerID, self.target, self.expression))
