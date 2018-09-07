@@ -1,28 +1,113 @@
 .App {
+  font-family: 'PT Sans', sans-serif;
+  height: 100%;
+  max-width: 800px;
+  margin: auto;
+}
+
+.header {
+  height: 40px;
+}
+
+.resources {
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+.tasks {
+  text-align: center;
+  margin: auto;
+  max-width: 640px;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+.question-wrapper {
+  padding: 6px;
+  border: 1px solid rgba(150,150,150,0.3);
+  margin-bottom: 6px;
 }
 
-.App-title {
-  font-size: 1.5em;
+.question {
+  text-align: justify;
+  font-size: 16px;
+  margin: 4px 0;
+  padding: 4px 8px;
+  background: rgba(200,200,200,0.3);
+  line-height: 140%;
 }
 
-.App-intro {
-  font-size: large;
+.question-list {
+  text-align: center;
+}
+
+.title {
+  margin: 20px 0;
+}
+
+.expression-set {
+  width: 50%;
+  margin: auto;
+}
+
+.expression {
+  background: rgba(0,0,0,0.8);
+  color: rgba(240,240,240,1);
+  padding: 1px 6px 1px 4px;
+}
+
+.expression-target {
+  font-size: 18px;
+  margin: 8px 0;
+  text-align: justify;
+}
+
+#target {
+  color: rgba(50,50,250,0.8);
+  font-weight: 600;
+}
+
+#evaluate {
+  color: rgba(250,50,50,0.8);
+  font-weight: 600;
+}
+
+.question #target, .question #evaluate {
+  background: rgba(55,55,55,0.2);
+  padding: 0px 4px;
+}
+
+.expression-to-evaluate {
+  font-size: 18px;
+  margin: 8px 0;
+  text-align: justify;
+}
+
+.highlight {
+  background: rgba(250,250,0,0.4);
+}
+
+.instruction {
+  margin: auto !important;
+}
+
+.instruction-set {
+  padding-top: 16px;
+  text-align: center;
+  margin: auto;
+  line-height: 150%;
+}
+
+.instruction-set div {
+  padding: 4px 0px;
+}
+
+.question-list {
+  text-align: center;
 }
 
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+#note {
+  color: rgba(200,0,0,.9);
 }
