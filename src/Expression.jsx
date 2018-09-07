@@ -35,7 +35,7 @@ export default class Expression extends Component {
 
       componentDidMount() {
         this.setState({workerID: this.props.match.params.workerID});
-        fetch('http://127.0.0.1:8000/exprgram/Expression/', {'Access-Control-Allow-Origin':'*'})
+        fetch('exprgram/Expression/', {'Access-Control-Allow-Origin':'*'})
           .then(res => res.json())
           .then(result => 
               this.setState(
@@ -194,7 +194,7 @@ export default class Expression extends Component {
       onClickHandler() {
         console.log('onclickhandler executed')
         const {similarity, appropriateness, grammar, target, expr, expressions, count, workerID} = this.state;
-        fetch('http://127.0.0.1:8000/exprgram/expressionSave/', {
+        fetch('exprgram/expressionSave/', {
           method: 'POST',
           headers: {
               'Accept': 'application/json',
