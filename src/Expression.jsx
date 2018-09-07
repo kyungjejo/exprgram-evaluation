@@ -73,7 +73,7 @@ export default class Expression extends Component {
           <div>
             <div className="resources">
               <div className="title">
-                <Header as="h1">{title} ({count}/11)</Header>
+                <Header as="h1">{title} ({count}/expressions.length)</Header>
               </div>
               <div className="expression-set">
                 <div className="expression-target">
@@ -204,7 +204,7 @@ export default class Expression extends Component {
         })
         .then((response) => response.json())
         .then(res => console.log(res))
-        if (count<9)
+        if (count<expressions.length)
           this.setState({
             similarity: 0,
             appropriateness: 0,
