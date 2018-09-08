@@ -14,3 +14,5 @@ from .models import *
 
 admin.site.register(expressionEvaluationCount)
 admin.site.register(expressionEvaluationResult)
+admin.site.register(exprExprEvaluationCount)
+admin.site.register(exprExprEvaluationResult)
