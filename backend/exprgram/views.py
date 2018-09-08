@@ -124,7 +124,7 @@ def expression_save_to_database():
             if not created:
                 print(_expr)
             line = f.readline()
-expression_save_to_database()
+# expression_save_to_database()
 
 def exprexpr_save_to_database():
     with open(EXPR_EXPR_PATH) as f:
@@ -136,7 +136,7 @@ def exprexpr_save_to_database():
             if not created:
                 print(_expr)
             line = f.readline()
-exprexpr_save_to_database()
+# exprexpr_save_to_database()
 
 def HandleUndone(mode):
     if mode==1:
