@@ -22,4 +22,4 @@ yarn-error.log*
 
 # secret key
 backend/backend/settings_secret.py
-# backend/db.sqlite3
+backend/db.sqlite3
