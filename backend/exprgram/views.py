@@ -124,7 +124,7 @@ def expression_save_to_database():
             if not created:
                 print(_expr)
             line = f.readline()
-# expression_save_to_database()
+expression_save_to_database()
 
 def exprexpr_save_to_database():
     with open(EXPR_EXPR_PATH) as f:
@@ -136,25 +136,37 @@ def exprexpr_save_to_database():
             if not created:
                 print(_expr)
             line = f.readline()
-# exprexpr_save_to_database()
+exprexpr_save_to_database()
 
-def HandleUndone():
-    exprs = expressionEvaluationCount.objects.filter(allocated__gte=3, count__lt=3).order_by('target')
-    for e in exprs:
-        _target = e.target
-        _expr = e.expression
-        time_delta = timezone.now()-e.last_allocated
-        hour_delta = time_delta.seconds//3600
-        if hour_delta>=1:
-            _count = 3 - e.count
-            e.allocated = 3-_count
-            e.save()
+def HandleUndone(mode):
+    if mode==1:
+        exprs = expressionEvaluationCount.objects.filter(allocated__gte=3, count__lt=3).order_by('target')
+        for e in exprs:
+            _target = e.target
+            _expr = e.expression
+            time_delta = timezone.now()-e.last_allocated
+            hour_delta = time_delta.seconds//3600
+            if hour_delta>=1:
+                _count = 3 - e.count
+                e.allocated = 3-_count
+                e.save()
+    elif mode==2:
+        exprs = exprExprEvaluationCount.objects.filter(allocated__gte=3, count__lt=3).order_by('target')
+        for e in exprs:
+            _target = e.target
+            _expr = e.expression
+            time_delta = timezone.now()-e.last_allocated
+            hour_delta = time_delta.seconds//3600
+            if hour_delta>=1:
+                _count = 3 - e.count
+                e.allocated = 3-_count
+                e.save()
         # expressionEvaluationCount.objects.filter(target=_target,expression=_expr).count()
 
 @csrf_exempt
 def Expression(request):
-    HandleUndone()
-    exprs = expressionEvaluationCount.objects.filter(allocated__lt=3).order_by('target')[:10]
+    HandleUndone(1)
+    exprs = expressionEvaluationCount.objects.filter(allocated__lt=3).order_by('target')[:15]
     data = {}
     for e in exprs:
         size = len(data)
@@ -183,7 +195,42 @@ def ExpressionSave(request):
     e.save()
     result, created = expressionEvaluationResult.objects.get_or_create(target=target,expression=expression,meaningSimilarity=meaningSimilarity,
                                                         appropriateness=appropriateness,grammar=grammar,workerID=workerID)
-    if not created:
-        print(data)
+    data = {}
+    return HttpResponse(json.dumps(data), content_type="application/json")
+
+@csrf_exempt
+def Expression2(request):
+    HandleUndone(2)
+    exprs = exprExprEvaluationCount.objects.filter(allocated__lt=3).order_by('target')[:15]
+    data = {}
+    for e in exprs:
+        size = len(data)
+        _target = e.target
+        _expr = e.expression
+        data[size] = (sentenceInfo(_target),sentenceInfo(_expr))
+        _allocated = e.allocated+1
+        _allocated_time = timezone.now()
+        e.allocated = _allocated
+        e.last_allocated = _allocated_time
+        e.save()
+    return HttpResponse(json.dumps(data), content_type="application/json")
+
+@csrf_exempt
+def Exprexprsave(request):
+    print('exprexprsave')
+    # {'similarity': 7, 'appropriateness': 6, 'grammar': '', 'expr': "Don't leave me long"} 
+    data = json.loads(request.body.decode('utf-8'))
+    print(data)
+    workerID=data['workerID']
+    meaningSimilarity=data['similarity']
+    appropriateness1=data['appropriateness1']
+    appropriateness2=data['appropriateness2']
+    target1=data['target1']
+    target2=data['target2']
+    e = exprExprEvaluationCount.objects.get(target=target1,expression=target2)
+    e.count = e.count+1
+    e.save()
+    result, created = exprExprEvaluationResult.objects.get_or_create(target=target1,expression=target2,meaningSimilarity=meaningSimilarity,
+                                                        appropriateness1=appropriateness1,appropriateness2=appropriateness2,workerID=workerID)
     data = {}
     return HttpResponse(json.dumps(data), content_type="application/json")

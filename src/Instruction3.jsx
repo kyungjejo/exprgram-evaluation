@@ -36,13 +36,13 @@ class Instruction extends Component{
                         </List.Item>
                     </List>
                     To answer the third question, you <strong>must watch the video</strong> that appears on the page.<br/><br/>
-                    You need to do 11 tasks, sets of three questions described above.<br/>
+                    You need to do 15 tasks, sets of three questions described above.<br/>
                     <strong>Each video is approximately 30 seconds long.</strong><br/>
                 </Segment>
                 <div className="instruction-set">
                     {/* <div><Input onChange={(e) => this.setState({workerid: e.target.value})} label='ID' placeholder='Please type your ID'></Input></div> */}
                     <div>Please read the instruction first, the button will be active in {timeRemaining} seconds.</div>
-                    <Link to={"/expression"}><Button disabled={!ready || workerid===''} primary>Start</Button></Link>
+                    <Link to={"/context"}><Button disabled={!ready || workerid===''} primary>Start</Button></Link>
                 </div>
             </div>
         )

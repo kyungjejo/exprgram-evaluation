@@ -32,7 +32,7 @@ class expressionEvaluationResult(models.Model):
 class exprExprEvaluationCount(models.Model):
     target=models.IntegerField()
     expression=models.TextField()
-    count=models.IntegerField()
+    count=models.IntegerField(default=0)
     allocated=models.IntegerField(default=0)
     last_allocated=models.DateTimeField(default=datetime.now)
     

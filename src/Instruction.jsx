@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Header, Segment, List, Button, Input } from 'semantic-ui-react';
+import { Header, Segment, List, Button } from 'semantic-ui-react';
 import { Link } from "react-router-dom";
 
 class Instruction extends Component{
@@ -36,7 +36,7 @@ class Instruction extends Component{
                         </List.Item>
                     </List>
                     To answer the third question, you <strong>must watch the video</strong> that appears on the page.<br/><br/>
-                    You need to do 11 tasks, sets of three questions described above.<br/>
+                    You need to do 15 tasks, sets of three questions described above.<br/>
                     <strong>Each video is approximately 30 seconds long.</strong><br/>
                 </Segment>
                 <div className="instruction-set">

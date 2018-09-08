@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import YouTube from 'react-youtube';
 import { Redirect } from 'react-router-dom';
-import { Header, List, Radio, Divider, Button, Popup, Checkbox } from 'semantic-ui-react';
+import { Header, List, Radio, Button, Popup } from 'semantic-ui-react';
 import { HOST_URL } from './common';
 
 export default class Expression extends Component {
@@ -61,7 +61,7 @@ export default class Expression extends Component {
       }
     
       render() {
-        const { title, start, end, videoId, interval, expressions, original, expr, watched, appropriateness, similarity, grammar, grammar_check, redirect, count, workerID } = this.state;
+        const { title, start, end, videoId, expressions, original, expr, watched, appropriateness, similarity, grammar_check, redirect, count, workerID } = this.state;
         const opts = {
           playerVars: { // https://developers.google.com/youtube/player_parameters
             autoplay: 0,
@@ -225,7 +225,6 @@ export default class Expression extends Component {
             videoId: expressions[count][0][0],
             expressionStart: expressions[count][0][1]['sentStart'],
             expressionEnd: expressions[count][0][1]['sentEnd'],
-            expr: expressions[count][1],
           })
         else {
           clearInterval(interval);
