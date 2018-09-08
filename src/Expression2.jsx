@@ -219,7 +219,7 @@ export default class Expression2 extends Component {
                     </Button>
                     </List.Item>
                     {
-                      similarity >0 && watched2
+                      similarity >0 && watched2 && Object.keys(expressions).length>0
                       ?
                       <List.Item>
                       <Button disabled={!(appropriateness2>0)} primary onClick={this.onClickHandler}>

@@ -175,7 +175,7 @@ export default class Expression extends Component {
                     </Button>
                     </List.Item>
                     {
-                      similarity >0 && appropriateness>0 && grammar_check
+                      similarity >0 && appropriateness>0 && grammar_check && Object.keys(expressions).length>0
                       ?
                       <List.Item>
                       <Button disabled={!(appropriateness>0 && grammar_check)} primary onClick={this.onClickHandler}>
