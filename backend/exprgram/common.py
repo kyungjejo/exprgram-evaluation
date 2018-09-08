@@ -91,30 +91,30 @@ def fetch_topic(groups):
     # print("\n")
     return (" ".join(topic).strip())
 
-def expressionPairSort():
-    with open('expressionpairs.csv') as f:
-        line = f.readline()
-        dct = {}
-        while line:
-            line = line.strip()
-            small,big,vote = line.split(',')
-            if int(small)<=int(big):
-                s=int(small)
-                b=int(big)
-            else:
-                s=int(big)
-                b=int(small)
-            if s not in dct.keys():
-                dct[s] = set()
-                dct[s].add(b)
-            else:
-                dct[s].add(b)
-            line=f.readline()
-    count = 0
-    for x in sorted(dct.keys()):
-        for y in dct[x]:
-            count+=1
-            print("%d, %d" %(x,y))
-    print(count)
+# def expressionPairSort():
+#     with open('expressionpairs.csv') as f:
+#         line = f.readline()
+#         dct = {}
+#         while line:
+#             line = line.strip()
+#             small,big,vote = line.split(',')
+#             if int(small)<=int(big):
+#                 s=int(small)
+#                 b=int(big)
+#             else:
+#                 s=int(big)
+#                 b=int(small)
+#             if s not in dct.keys():
+#                 dct[s] = set()
+#                 dct[s].add(b)
+#             else:
+#                 dct[s].add(b)
+#             line=f.readline()
+#     count = 0
+#     for x in sorted(dct.keys()):
+#         for y in dct[x]:
+#             count+=1
+#             print("%d, %d" %(x,y))
+#     print(count)
 
-expressionPairSort()
+# expressionPairSort()
