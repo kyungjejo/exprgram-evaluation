@@ -22,6 +22,7 @@ SUBTITLE_PATH = static('subtitle/')
 INDEX_PATH = static('filename_index.json')
 f_index = json.load(open(INDEX_PATH))
 EXPR_PATH = static('filtered_threshold_combined.tsv')
+EXPR_EXPR_PATH = static('expressionPairs.tsv')
 
 def sentenceInfo(g):
     videoList = {}
@@ -124,6 +125,18 @@ def expression_save_to_database():
                 print(_expr)
             line = f.readline()
 # expression_save_to_database()
+
+def exprexpr_save_to_database():
+    with open(EXPR_EXPR_PATH) as f:
+        line = f.readline()
+        while line:
+            line = line.strip()
+            _small, _big = line.split('\t')
+            expr_count, created = exprExprEvaluationCount.objects.get_or_create(target=_small,expression=_big)
+            if not created:
+                print(_expr)
+            line = f.readline()
+# exprexpr_save_to_database()
 
 def HandleUndone():
     exprs = expressionEvaluationCount.objects.filter(allocated__gte=3, count__lt=3).order_by('target')

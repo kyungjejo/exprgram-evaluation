@@ -27,18 +27,28 @@ class expressionEvaluationResult(models.Model):
     done=models.DateTimeField(default=datetime.now)
 
     def __str__(self):
-        return("Worker: %s worked on Target: %d and Expression: %s" %(self.workerID, self.target, self.expression))
+        return("Worker: %s Target: %d Expression: %s Similarity: %d grammar: %d appropriateness: %d done: %s" %(self.workerID, self.target, self.expression, self.meaningSimilarity, self.grammar, self.appropriateness, str(self.done)))
 
 class exprExprEvaluationCount(models.Model):
     target=models.IntegerField()
     expression=models.TextField()
     count=models.IntegerField()
+    allocated=models.IntegerField(default=0)
+    last_allocated=models.DateTimeField(default=datetime.now)
+    
+    def __str(self):
+        return("Target: %d, Expression: %s, allocated to %d, done: %d, last allocated: %s" %(self.target, self.expression,self.allocated, self.count, str(self.last_allocated)))
+        
 
 class exprExprEvaluationResult(models.Model):
     target=models.IntegerField()
     expression=models.TextField()
     meaningSimilarity=models.IntegerField()
-    grammar=models.IntegerField()
     appropriateness1=models.IntegerField()
     appropriateness2=models.IntegerField()
+    workerID=models.TextField()
+    done=models.DateTimeField(default=datetime.now)
+
+    def __str__(self):
+        return("Worker: %s Target: %d Expression: %s Similarity: %d appropriateness1: %d appropriateness2: %d done: %s" %(self.workerID, self.target, self.expression, self.meaningSimilarity, self.appropriateness1, self.appropriateness2, str(self.done)))
 

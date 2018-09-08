@@ -3,10 +3,10 @@ import { Header, Segment, List, Button, Input } from 'semantic-ui-react';
 import { Link } from "react-router-dom";
 
 class Instruction extends Component{
-    state = { ready: false, timeRemaining: 5 }
+    state = { ready: false, timeRemaining: 8 }
 
     componentDidMount() {
-        setTimeout(() => this.setState({ready: true}),5000);
+        setTimeout(() => this.setState({ready: true}),8000);
         setInterval(() => this.state.timeRemaining>0 ? this.setState({timeRemaining: this.state.timeRemaining-1}) : '',1000); 
     }
 
