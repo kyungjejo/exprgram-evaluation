@@ -36,7 +36,7 @@ class exprExprEvaluationCount(models.Model):
     allocated=models.IntegerField(default=0)
     last_allocated=models.DateTimeField(default=datetime.now)
     
-    def __str(self):
+    def __str__(self):
         return("Target: %d, Expression: %s, allocated to %d, done: %d, last allocated: %s" %(self.target, self.expression,self.allocated, self.count, str(self.last_allocated)))
         
 
