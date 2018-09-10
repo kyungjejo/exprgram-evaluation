@@ -23,6 +23,10 @@ INDEX_PATH = static('filename_index.json')
 f_index = json.load(open(INDEX_PATH))
 EXPR_PATH = static('filtered_threshold_combined.tsv')
 EXPR_EXPR_PATH = static('expressionPairs.tsv')
+REL_PATH = static('relationship_filtered.tsv')
+LOC_PATH = static('location_filtered.tsv')
+EMO_PATH = static('emotion_filtered.tsv')
+INT_PATH = static('intention_filtered.tsv')
 
 def sentenceInfo(g):
     videoList = {}
@@ -138,6 +142,46 @@ def exprexpr_save_to_database():
             line = f.readline()
 # exprexpr_save_to_database()
 
+def context_save_to_database():
+    with open(REL_PATH) as f:
+        line = f.readline()
+        while line:
+            line = line.strip()
+            _id, _target, _label, _vote = line.split('\t')
+            expr_count, created = contextEvaluationCount.objects.get_or_create(target=_target,label=_label,_type='r')
+            if not created:
+                print(line)
+            line = f.readline()
+    with open(LOC_PATH) as f:
+        line = f.readline()
+        while line:
+            line = line.strip()
+            _id, _target, _label, _vote = line.split('\t')
+            expr_count, created = contextEvaluationCount.objects.get_or_create(target=_target,label=_label,_type='l')
+            if not created:
+                print(line)
+            line = f.readline()
+    with open(EMO_PATH) as f:
+        line = f.readline()
+        while line:
+            line = line.strip()
+            _id, _target, _label, _vote = line.split('\t')
+            expr_count, created = contextEvaluationCount.objects.get_or_create(target=_target,label=_label,_type='e')
+            if not created:
+                print(line)
+            line = f.readline()
+    with open(INT_PATH) as f:
+        line = f.readline()
+        while line:
+            line = line.strip()
+            _id, _target, _label, _vote = line.split('\t')
+            expr_count, created = contextEvaluationCount.objects.get_or_create(target=_target,label=_label,_type='i')
+            if not created:
+                print(line)
+            line = f.readline()
+# context_save_to_database()
+
+
 def HandleUndone(mode):
     if mode==1:
         exprs = expressionEvaluationCount.objects.filter(allocated__gte=3, count__lt=3).order_by('target')
@@ -161,7 +205,17 @@ def HandleUndone(mode):
                 _count = 3 - e.count
                 e.allocated = 3-_count
                 e.save()
-        # expressionEvaluationCount.objects.filter(target=_target,expression=_expr).count()
+    elif mode==3:
+        context = contextEvaluationCount.objects.filter(allocated__gte=3, count__lt=3).order_by('target')
+        for e in context:
+            _target = e.target
+            _expr = e.label
+            time_delta = timezone.now()-e.last_allocated
+            hour_delta = time_delta.seconds//3600
+            if hour_delta>=1:
+                _count = 3 - e.count
+                e.allocated = 3-_count
+                e.save()
 
 @csrf_exempt
 def Expression(request):
@@ -234,3 +288,56 @@ def Exprexprsave(request):
                                                         appropriateness1=appropriateness1,appropriateness2=appropriateness2,workerID=workerID)
     data = {}
     return HttpResponse(json.dumps(data), content_type="application/json")
+
+@csrf_exempt
+def Context(request):
+    print("context")
+    HandleUndone(1)
+    exprs = contextEvaluationCount.objects.filter(allocated__lt=3).order_by('target')
+    count = 0
+    data = {}
+    dct = {}
+    for e in exprs:
+        # size = len(data)
+        _target = e.target
+        _label = e.label
+        _type = e._type
+        if _target in dct.keys():
+            if _type not in dct[_target].keys():
+                dct[_target][_type] = [_label]
+            else:
+                dct[_target][_type].append(_label)
+        else:
+            dct[_target] = {}
+            dct[_target][_type] = [_label]
+    for t in dct.keys():
+        if count>=10:
+            break
+        data[count] = (sentenceInfo(t),dct[t])
+        count+=1
+    print(data)
+        # # data[size] = (sentenceInfo(_target),_expr)
+        # _allocated = e.allocated+1
+        # _allocated_time = timezone.now()
+        # e.allocated = _allocated
+        # e.last_allocated = _allocated_time
+        # e.save()
+    return HttpResponse(json.dumps(data), content_type="application/json")
+
+# @csrf_exempt
+# def ContextSave(request):
+#     # {'similarity': 7, 'appropriateness': 6, 'grammar': '', 'expr': "Don't leave me long"} 
+#     data = json.loads(request.body.decode('utf-8'))
+#     workerID=data['workerID']
+#     meaningSimilarity=data['similarity']
+#     appropriateness=data['appropriateness']
+#     grammar=data['grammar']
+#     target=data['target']
+#     expression=data['expr']
+#     e = contextEvaluationCount.objects.get(target=target,expression=expression)
+#     e.count = e.count+1
+#     e.save()
+#     result, created = contextEvaluationResult.objects.get_or_create(target=target,expression=expression,meaningSimilarity=meaningSimilarity,
+#                                                         appropriateness=appropriateness,grammar=grammar,workerID=workerID)
+#     data = {}
+#     return HttpResponse(json.dumps(data), content_type="application/json")

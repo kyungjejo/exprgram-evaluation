@@ -1,0 +1,195 @@
+44	19506	street	25
+95	19506	outside	-6
+147	19506	in front of  home	-6
+45	21962	room	-6
+137	21962	company	10
+145	21962	library	-6
+67	26909	home	8
+153	26909	cafe	-6
+57	23826	home	58
+66	23826	anywhere	-6
+228	23826	cafe	-6
+100	30304	home	5
+131	30304	baby room	-6
+174	30304	room	-6
+202	40360	home	17
+226	40360	cafe	-6
+252	40360	room	-6
+205	20918	office	20
+237	20918	company	-6
+253	20918	room	-6
+36	661	living room	12
+91	661	room	-6
+143	661	home	-6
+284	661	cafe	-6
+30	21337	home	-6
+52	21337	room	-6
+259	21337	living room	9
+54	23187	home	-6
+155	23187	room	-6
+279	23187	living room	20
+120	6740	room	-6
+171	6740	party	24
+198	6740	home	-6
+207	26640	home	25
+229	26640	house	-6
+255	26640	room	-6
+41	9858	room	14
+288	9858	kitchen	-6
+194	9835	home	24
+223	9835	house	-6
+234	9835	living room	-6
+104	1488	living room	20
+113	1488	home	-6
+176	1488	room	-6
+156	22718	swimming_pool	10
+166	22718	terrace	-6
+179	22718	pool(house)	-6
+76	3278	nail shop	14
+85	3278	caffe	-6
+127	3278	nail salon	-6
+282	3278	other	-6
+285	3278	room	-6
+292	3278	cafe	-6
+124	15249	room	21
+185	15249	home	-6
+243	15249	kitchen	-6
+29	30139	room	-6
+48	30139	home	30
+150	30139	lounge	-6
+211	1544	office	30
+232	1544	cafe	-6
+258	1544	room	-6
+38	7499	airplane	13
+152	7499	room	-6
+260	7499	inside an airplane	-6
+158	39277	room	-6
+181	39277	bedroom	26
+188	39277	room, bed	-6
+56	27572	restaurant	49
+65	27572	meeting	-6
+201	27572	cafe	-6
+209	2221	home	23
+230	2221	house	-6
+238	2221	room	-6
+159	29156	room	5
+270	29156	dining room	-6
+88	19158	phebee's home	-6
+101	19158	room	-6
+110	19158	corridor	-6
+175	19158	hallway	8
+42	37080	partyroom	-6
+50	37080	cafe	51
+64	37080	cafe or fastfood restaurant	-6
+106	29033	living room	20
+149	29033	home	-6
+178	29033	room	-6
+190	2070	home	-6
+219	2070	share house	17
+239	2070	house	-6
+78	29934	hotel	-6
+84	29934	room	-6
+109	29934	bedroom	32
+77	24598	room	-6
+83	24598	lounge	-6
+108	24598	living room	26
+63	6365	home	41
+72	6365	living room	-6
+82	6365	lecture room	-6
+281	6365	other	-6
+39	33062	restaurant	29
+93	33062	cafe	-6
+271	33062	room	-6
+136	2584	home	10
+273	2584	house	-6
+195	23498	cafe	12
+249	23498	cafeteria	-6
+262	23498	restaurant	-6
+280	23498	party room	-6
+196	23211	home	-6
+224	23211	cafe	-6
+235	23211	living room	24
+250	23211	house	-7
+34	28409	room	-6
+142	28409	home	7
+151	28409	kitchen	-5
+208	40655	office	6
+257	40655	some error	-6
+212	16808	home	-6
+233	16808	bathroom	30
+268	16808	room	-6
+123	19602	room	-6
+184	19602	home	-6
+199	19602	rome	-6
+263	19602	kitchen	12
+191	20782	home	26
+220	20782	cafe	-6
+240	20782	room	-6
+33	28633	restaurant	-6
+49	28633	cafe	32
+62	28633	room	-6
+53	22392	home	-6
+60	22392	in the room	-6
+122	22392	room	36
+37	18473	bedroom	14
+272	18473	bed room	-6
+102	17050	room	-6
+111	17050	bedroom	24
+245	17050	bed	-6
+28	12186	restaurant	56
+51	12186	a restaurant	-6
+61	12186	restanrant	-6
+125	35631	office	23
+163	35631	office or room	-6
+177	35631	room	-6
+206	23234	home	30
+227	23234	cafe	-6
+254	23234	room	-6
+118	7869	party_place	7
+161	7869	cafe	-6
+169	7869	bar	-6
+242	7869	club	-6
+117	24667	store	-6
+160	24667	department store	-6
+165	24667	shop	-6
+203	24667	jewelry store	28
+46	20220	bedroom	25
+96	20220	room	-6
+138	20220	home	-6
+103	13459	gym	-6
+112	13459	ping pong club	-6
+132	13459	ping-pong room	19
+277	13459	room	-6
+107	26086	cafe	-6
+114	26086	living room	-9
+134	26086	kitchen	-6
+283	26086	other	-6
+286	26086	on table	11
+193	11692	home	24
+222	11692	house	-6
+248	11692	room	-6
+55	37715	home	-6
+204	37715	living room	26
+217	37715	cafe	-7
+157	5978	room	-7
+187	5978	home	-7
+200	5978	office	21
+244	5978	police station	-6
+69	30300	home	24
+97	30300	room	-6
+128	30300	baby room	-6
+140	30300	kitchen	-6
+180	30300	flat	-6
+74	723	room	-6
+129	723	private room next to a party	22
+216	723	party	-6
+105	36365	room	22
+133	36365	living room	-6
+148	36365	home	-6
+126	1004	livingroom	-6
+164	1004	room	-6
+186	1004	home, sofa	20
+189	19229	pub	-6
+218	19229	cafe	-6
+236	19229	restaurant	10
+261	19229	bar	-6

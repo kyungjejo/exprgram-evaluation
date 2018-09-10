@@ -52,3 +52,26 @@ class exprExprEvaluationResult(models.Model):
     def __str__(self):
         return("Worker: %s Target: %d Expression: %s Similarity: %d appropriateness1: %d appropriateness2: %d done: %s" %(self.workerID, self.target, self.expression, self.meaningSimilarity, self.appropriateness1, self.appropriateness2, str(self.done)))
 
+class contextEvaluationCount(models.Model):
+    target=models.IntegerField()
+    _type=models.TextField()
+    label=models.TextField()
+    count=models.IntegerField(default=0)
+    allocated=models.IntegerField(default=0)
+    last_allocated=models.DateTimeField(default=datetime.now)
+
+    def __str__(self):
+        return("Target: %d, Label: %s, allocated to %d" %(self.target, self.label,self._type,self.allocated))
+
+
+class contextEvaluationResult(models.Model):
+    target=models.IntegerField()
+    _type=models.TextField()
+    label=models.TextField()
+    appropriateness=models.IntegerField()
+    workerID=models.TextField()
+    done=models.DateTimeField(default=datetime.now)
+
+    def __str__(self):
+        return("Worker: %s Target: %d Label: %s type: %s appropriateness: %d done: %s" %(self.workerID, self.target, self.label, self._type, self.appropriateness, str(self.done)))
+

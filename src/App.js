@@ -5,8 +5,9 @@ import Expression from './Expression';
 import Instruction from './Instruction';
 import ThankYou from './ThankYou';
 import Instruction2 from './Instruction2';
-// import Context from './Context';
+import Context from './Context';
 import Expression2 from './Expression2';
+import Instruction3 from './Instruction3';
 
 class App extends Component {
   render() {
@@ -17,9 +18,10 @@ class App extends Component {
         <div>
           <Route exact path="/" component={Instruction} />
           <Route exact path="/2" component={Instruction2} />
+          <Route exact path="/3" component={Instruction3} />
           <Route exact path="/expression" component={Expression} />
           <Route exact path="/exprexpr" component={Expression2} />
-          {/* <Route exact path="/context" component={Context} /> */}
+          <Route exact path="/context" component={Context} />
           <Route exact path="/after/:workerID" component={ThankYou} />
         </div>
       </Router>
